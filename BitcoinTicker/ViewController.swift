@@ -85,12 +85,51 @@ class ViewController: UIViewController{
                     let t2 = t1.sorted{ $0["time"] > $1["time"]  }
                     let t3 = t2[0]["close"]
                     print(t3)
+                    let myBTCValue = self.bitcoinPriceLabel.text!.replacingOccurrences(of: "BTC:\t$", with: "")
+                    let myGBTCValue = self.gtbcPriceLabel.text!.replacingOccurrences(of: "GBTC:\t$", with: "")
+                    print(myBTCValue)
+                    print(myGBTCValue)
+                    print(t3.doubleValue)
+                    self.calculateCenRate(currentBTCPrice: Double(myBTCValue)!, lastCloseBTCPrice: t3.doubleValue,
+                                     lastGBTCPrice: Double(self.lastClosedPrice)!,
+                                     currentGBTCPrice: Double(myGBTCValue)!)
                     
                     
                 } else {
                     
                 }
         }
+        
+    }
+    
+    func calculateCenRate(currentBTCPrice: Double, lastCloseBTCPrice: Double, lastGBTCPrice:Double, currentGBTCPrice:Double){
+        
+        var cenRating = Double(0)
+        var message = ""
+        
+        let overnightFactor = currentBTCPrice / lastCloseBTCPrice
+        cenRating = pow(overnightFactor, Double(1.5)) * lastGBTCPrice
+        if overnightFactor >  1{
+            if(cenRating < currentGBTCPrice ){
+                message = "sell!"
+
+            }
+            else{
+                message = "hold"
+
+            }
+        }
+        else {
+            if(cenRating <= currentGBTCPrice ){
+                message = "hold"
+
+            }
+            else{
+                message = "buy!"
+            }
+        }
+        print(message)
+        CenRating.text = "Cen's fair price: $" + String(cenRating)
         
     }
 
@@ -134,7 +173,7 @@ class ViewController: UIViewController{
     func updateBitcoinData(json : JSON, ticker:String) {
         if(ticker == "BTC"){
                 if let tempResult = json["last"].string {
-                    bitcoinPriceLabel.text = "BTC:\t $" + tempResult
+                    bitcoinPriceLabel.text = "BTC:\t$" + tempResult
                 }
                 else{
                     bitcoinPriceLabel.text = "BTC:\tPrice N/A"
