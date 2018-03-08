@@ -13,7 +13,7 @@ import SwiftyJSON
 class ViewController: UIViewController{
     
     let btcURL = "https://api.gemini.com/v1/pubticker/BTCUSD"
-    let btcURL2 = "https://min-api.cryptocompare.com/data/histohour?fsym=BTC&tsym=USD&limit=1&toTS="
+    let btcURL2 = "https://min-api.cryptocompare.com/data/histohour?fsym=BTC&tsym=USD&limit=1&toTs="
     let stockURL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol="
     let stockURL2 = "&interval=1min&outputsize=compact&apikey=TI75XBSBGNM4YZM6"
     var finalURL = ""
@@ -73,6 +73,7 @@ class ViewController: UIViewController{
     func getTickerData(ticker: String) {
         
         let tickerURL = ticker == "BTC" ? btcURL : stockURL + ticker + stockURL2
+        print(tickerURL)
         Alamofire.request(tickerURL, method: .get)
             .responseJSON { response in
                 if response.result.isSuccess {
@@ -115,12 +116,20 @@ class ViewController: UIViewController{
             let myCurrentGBTC = Double(self.currentGBTCPrice) ,
             let myLastBTC = Double(self.lastCloseBTCPrice) ,
             let myLastGBTC = Double(self.lastCloseGBTCPrice) {
-        
+            
+            print("Current BTC: '\(myCurrentBTC)'")
+            print("Current GBTC: '\(myCurrentGBTC)'")
+            print("Last BTC at 4:00 PM:  '\(myLastBTC)'")
+            print("Last GBTC at 4:00 PM: '\(myLastGBTC)'")
+            
             var cenRating = Double(0)
             var message = ""
             
             let overnightFactor = myCurrentBTC / myLastBTC
+            print("Overnight factor: '\(overnightFactor)'")
             cenRating = pow(overnightFactor, Double(1.5)) * myLastGBTC
+            print("Cen Rating: pow(overnightFactor, Double(1.5)) * myLastGBTC = '\(cenRating)'")
+            
             if overnightFactor >  1{
                 if(cenRating < myCurrentGBTC ){
                     message = "Sell!"
@@ -145,7 +154,7 @@ class ViewController: UIViewController{
                 }
             }
             print(message)
-            CenRating.text = "Cen's fair price: $" + String(cenRating)
+            CenRating.text = String(format: "Cen's fair price: \t$%.2f",cenRating)
             Suggestion.text = message
         }
         else
@@ -158,6 +167,7 @@ class ViewController: UIViewController{
 
     func getLastClosePriceInfo(){
         let tickerURL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=GBTC&outputsize=compact&apikey=TI75XBSBGNM4YZM6"
+        print(tickerURL)
         Alamofire.request(tickerURL, method: .get)
             .responseJSON { response in
                 if response.result.isSuccess {
@@ -195,13 +205,10 @@ class ViewController: UIViewController{
     
     func updateBitcoinData(json : JSON, ticker:String) {
         if(ticker == "BTC"){
-                if let tempResult = json["last"].string {
-                    currentBTCPrice = tempResult
-                    bitcoinPriceLabel.text = "BTC:\t$" + tempResult
-                }
-                else{
-                    bitcoinPriceLabel.text = "BTC:\tPrice N/A"
-                }
+                let tempResult = json["last"].doubleValue
+                currentBTCPrice = String(tempResult)
+                let myBTCValue = Int(tempResult)
+                bitcoinPriceLabel.text = String(format: "BTC:\t$%d",myBTCValue)
             }
             else{
             if(json["Time Series (1min)"].dictionary != nil){
@@ -212,7 +219,13 @@ class ViewController: UIViewController{
 
                 if let tempResult = t4["1. open"].string {
                     currentGBTCPrice = tempResult
-                    gtbcPriceLabel.text = ticker + ":\t$" + tempResult
+                    if let myValue = Double(tempResult) {
+                        gtbcPriceLabel.text = String(format: "GBTC:\t$%.2f",myValue)
+                    }
+                    else{
+                        gtbcPriceLabel.text = ""
+                    }
+                    
                 }
                 else{
                     gtbcPriceLabel.text = ticker + ": Price N/A"
