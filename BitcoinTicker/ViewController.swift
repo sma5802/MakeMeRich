@@ -13,7 +13,7 @@ import SwiftyJSON
 class ViewController: UIViewController{
     
     let btcURL = "https://api.gemini.com/v1/pubticker/BTCUSD"
-    let btcURL2 = "https://min-api.cryptocompare.com/data/histohour?fsym=BTC&tsym=USD&limit=1&toTs="
+    let btcURL2 = "https://api.gemini.com/v1/trades/btcusd?since="
     let stockURL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol="
     let stockURL2 = "&interval=1min&outputsize=compact&apikey=TI75XBSBGNM4YZM6"
     var finalURL = ""
@@ -48,7 +48,7 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getLastClosePriceInfo()
+        getLastGBTCClosePriceInfo()
       
         
         Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
@@ -97,9 +97,9 @@ class ViewController: UIViewController{
             .responseJSON { response in
                 if response.result.isSuccess {
                     let json : JSON = JSON(response.result.value!)
-                    let t1 = json["Data"].array!
-                    let t2 = t1.sorted{ $0["time"] > $1["time"]  }
-                    let t3 = t2[0]["close"]
+                    let t1 = json.array!
+                    let t2 = t1.sorted{ $0["timestamp"] < $1["timestamp"]  }
+                    let t3 = t2[0]["price"]
                     self.lastCloseBTCPrice = String(t3.doubleValue)
                     
                     self.calculateCenRate()
@@ -165,7 +165,7 @@ class ViewController: UIViewController{
         
     }
 
-    func getLastClosePriceInfo(){
+    func getLastGBTCClosePriceInfo(){
         let tickerURL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=GBTC&outputsize=compact&apikey=TI75XBSBGNM4YZM6"
         print(tickerURL)
         Alamofire.request(tickerURL, method: .get)
