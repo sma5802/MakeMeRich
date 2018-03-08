@@ -17,20 +17,33 @@ class ViewController: UIViewController{
     let stockURL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol="
     let stockURL2 = "&interval=1min&outputsize=compact&apikey=TI75XBSBGNM4YZM6"
     var finalURL = ""
-    var lastClosedPrice = ""
+    var lastCloseGBTCPrice = ""
+    var lastCloseBTCPrice = ""
+    var currentGBTCPrice = ""
+    var currentBTCPrice = ""
     var lastClosedDate = ""
 
 
     //Pre-setup IBOutlets
     @IBOutlet weak var bitcoinPriceLabel: UILabel!
 
+    @IBOutlet weak var Suggestion: UILabel!
     @IBOutlet weak var CenRating: UILabel!
     @IBOutlet weak var gtbcPriceLabel: UILabel!
  
-    @IBAction func RefreshClicked(_ sender: Any) {
-         //getTickerData(ticker:"BTC")
-         //getTickerData(ticker:"GBTC")
+    @IBAction func DisclaimerPressed(_ sender: Any) {
+        let message = "The information contained in this presentation is solely for educational purposes and does not constitue investment advice.  We may or we may not take the trade. The risk of trading in securities markets can be substantial.  You should carefully consider if engaging in such activity is suitable to your own financial situation. I, Raymond Cen, am not responsible for any liabilities arising from the result of your market involvement or individual trade activities."
+        
+        // create the alert
+        let alert = UIAlertController(title: "Warning", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        // add an action (button)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        
+        // show the alert
+        self.present(alert, animated: true, completion: nil)
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +61,8 @@ class ViewController: UIViewController{
     @objc func update() {
         getTickerData(ticker:"BTC")
         getTickerData(ticker:"GBTC")
+        calculateCenRate()
+        
     }
     
     
@@ -84,52 +99,60 @@ class ViewController: UIViewController{
                     let t1 = json["Data"].array!
                     let t2 = t1.sorted{ $0["time"] > $1["time"]  }
                     let t3 = t2[0]["close"]
-                    print(t3)
-                    let myBTCValue = self.bitcoinPriceLabel.text!.replacingOccurrences(of: "BTC:\t$", with: "")
-                    let myGBTCValue = self.gtbcPriceLabel.text!.replacingOccurrences(of: "GBTC:\t$", with: "")
-                    print(myBTCValue)
-                    print(myGBTCValue)
-                    print(t3.doubleValue)
-                    self.calculateCenRate(currentBTCPrice: Double(myBTCValue)!, lastCloseBTCPrice: t3.doubleValue,
-                                     lastGBTCPrice: Double(self.lastClosedPrice)!,
-                                     currentGBTCPrice: Double(myGBTCValue)!)
+                    self.lastCloseBTCPrice = String(t3.doubleValue)
                     
+                    self.calculateCenRate()
                     
-                } else {
                     
                 }
         }
         
     }
     
-    func calculateCenRate(currentBTCPrice: Double, lastCloseBTCPrice: Double, lastGBTCPrice:Double, currentGBTCPrice:Double){
+    func calculateCenRate(){
         
-        var cenRating = Double(0)
-        var message = ""
+        if let myCurrentBTC = Double(self.currentBTCPrice) ,
+            let myCurrentGBTC = Double(self.currentGBTCPrice) ,
+            let myLastBTC = Double(self.lastCloseBTCPrice) ,
+            let myLastGBTC = Double(self.lastCloseGBTCPrice) {
         
-        let overnightFactor = currentBTCPrice / lastCloseBTCPrice
-        cenRating = pow(overnightFactor, Double(1.5)) * lastGBTCPrice
-        if overnightFactor >  1{
-            if(cenRating < currentGBTCPrice ){
-                message = "sell!"
+            var cenRating = Double(0)
+            var message = ""
+            
+            let overnightFactor = myCurrentBTC / myLastBTC
+            cenRating = pow(overnightFactor, Double(1.5)) * myLastGBTC
+            if overnightFactor >  1{
+                if(cenRating < myCurrentGBTC ){
+                    message = "Sell!"
+                    Suggestion.textColor = UIColor.red
 
-            }
-            else{
-                message = "hold"
+                }
+                else{
+                    message = "Hold"
+                    Suggestion.textColor = UIColor.yellow
 
+                }
             }
+            else {
+                if(cenRating <= myCurrentGBTC ){
+                    message = "Hold"
+                    Suggestion.textColor = UIColor.yellow
+
+                }
+                else{
+                    message = "buy!"
+                    Suggestion.textColor = UIColor.green
+                }
+            }
+            print(message)
+            CenRating.text = "Cen's fair price: $" + String(cenRating)
+            Suggestion.text = message
         }
-        else {
-            if(cenRating <= currentGBTCPrice ){
-                message = "hold"
-
-            }
-            else{
-                message = "buy!"
-            }
+        else
+        {
+            CenRating.text = ""
+            Suggestion.text = ""
         }
-        print(message)
-        CenRating.text = "Cen's fair price: $" + String(cenRating)
         
     }
 
@@ -148,7 +171,7 @@ class ViewController: UIViewController{
                     
                     if let tempResult = t4["4. close"].string {
                         
-                        self.lastClosedPrice = tempResult
+                        self.lastCloseGBTCPrice = tempResult
                         let closedDate = String(t3.key) + " 16:00:00"
                         
                         let myDate: Date = String(closedDate).toDate(dateFormat: "yyyy-MM-dd HH:mm:ss")!
@@ -173,6 +196,7 @@ class ViewController: UIViewController{
     func updateBitcoinData(json : JSON, ticker:String) {
         if(ticker == "BTC"){
                 if let tempResult = json["last"].string {
+                    currentBTCPrice = tempResult
                     bitcoinPriceLabel.text = "BTC:\t$" + tempResult
                 }
                 else{
@@ -187,6 +211,7 @@ class ViewController: UIViewController{
                 let t4 = t3.value
 
                 if let tempResult = t4["1. open"].string {
+                    currentGBTCPrice = tempResult
                     gtbcPriceLabel.text = ticker + ":\t$" + tempResult
                 }
                 else{
