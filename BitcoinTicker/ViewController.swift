@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import SVProgressHUD
 
 class ViewController: UIViewController{
     
@@ -47,6 +48,7 @@ class ViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         getLastGBTCClosePriceInfo()
       
@@ -123,38 +125,36 @@ class ViewController: UIViewController{
             print("Last GBTC at 4:00 PM: '\(myLastGBTC)'")
             
             var cenRating = Double(0)
-            var message = ""
+            
             
             let overnightFactor = myCurrentBTC / myLastBTC
-            print("Overnight factor: '\(overnightFactor)'")
+            let roundedFactor = String(format: "%.3f",overnightFactor)
+            print("Overnight factor: '\(roundedFactor)'")
             cenRating = pow(overnightFactor, Double(1.5)) * myLastGBTC
             print("Cen Rating: pow(overnightFactor, Double(1.5)) * myLastGBTC = '\(cenRating)'")
-            
+            var message = ""
+
             if overnightFactor >  1{
                 if(cenRating < myCurrentGBTC ){
-                    message = "Sell!"
-                    Suggestion.textColor = UIColor.red
+                    message = "Overnight factor: \(roundedFactor) is greater than 1, and the market price is higher than Cen's price, Cen thniks that it is a good time to consider sell."
 
                 }
                 else{
-                    message = "Hold"
-                    Suggestion.textColor = UIColor.yellow
+                    message = "Overnight factor: \(roundedFactor) is greater than 1, and the market price is lower than Cen's price, Cen considers hold."
 
                 }
             }
             else {
                 if(cenRating <= myCurrentGBTC ){
-                    message = "Hold"
-                    Suggestion.textColor = UIColor.yellow
+                    message = "Overnight factor: \(roundedFactor) is less than 1, and the market price is higher than Cen's price, Cen considers hold."
 
                 }
                 else{
-                    message = "buy!"
-                    Suggestion.textColor = UIColor.green
+                    message = "Overnight factor: \(overnightFactor) is less than 1, and the market price is lower than Cen's price, Cen thniks that it is a good time to consider buy."
                 }
             }
             print(message)
-            CenRating.text = String(format: "Cen's fair price: \t$%.2f",cenRating)
+            CenRating.text = String(format: "CEN:      $%.2f",cenRating)
             Suggestion.text = message
         }
         else
@@ -162,12 +162,14 @@ class ViewController: UIViewController{
             CenRating.text = ""
             Suggestion.text = ""
         }
+        SVProgressHUD.dismiss()
         
     }
 
     func getLastGBTCClosePriceInfo(){
         let tickerURL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=GBTC&outputsize=compact&apikey=TI75XBSBGNM4YZM6"
         print(tickerURL)
+        SVProgressHUD.show()
         Alamofire.request(tickerURL, method: .get)
             .responseJSON { response in
                 if response.result.isSuccess {
@@ -208,7 +210,7 @@ class ViewController: UIViewController{
                 let tempResult = json["last"].doubleValue
                 currentBTCPrice = String(tempResult)
                 let myBTCValue = Int(tempResult)
-                bitcoinPriceLabel.text = String(format: "BTC:\t$%d",myBTCValue)
+                bitcoinPriceLabel.text = String(format: "BTC:       $%d",myBTCValue)
             }
             else{
             if(json["Time Series (1min)"].dictionary != nil){
@@ -220,7 +222,7 @@ class ViewController: UIViewController{
                 if let tempResult = t4["1. open"].string {
                     currentGBTCPrice = tempResult
                     if let myValue = Double(tempResult) {
-                        gtbcPriceLabel.text = String(format: "GBTC:\t$%.2f",myValue)
+                        gtbcPriceLabel.text = String(format: "GBTC:    $%.2f",myValue)
                     }
                     else{
                         gtbcPriceLabel.text = ""
