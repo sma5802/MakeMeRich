@@ -136,21 +136,21 @@ class ViewController: UIViewController{
 
             if overnightFactor >  1{
                 if(cenRating < myCurrentGBTC ){
-                    message = "Overnight factor: \(roundedFactor) is greater than 1, and the market price is higher than Cen's price, Cen thniks that it is a good time to consider sell."
+                    message = "Last close day is: \(lastClosedDate), Last close BTC price is: \(lastCloseBTCPrice)\nOvernight factor: \(roundedFactor) is greater than 1, and the market price is higher than Cen's price, Cen considers sell."
 
                 }
                 else{
-                    message = "Overnight factor: \(roundedFactor) is greater than 1, and the market price is lower than Cen's price, Cen considers hold."
+                    message = "Last close day is: \(lastClosedDate), Last close BTC price is: \(lastCloseBTCPrice)\nOvernight factor: \(roundedFactor) is greater than 1, and the market price is lower than Cen's price, Cen considers hold."
 
                 }
             }
             else {
                 if(cenRating <= myCurrentGBTC ){
-                    message = "Overnight factor: \(roundedFactor) is less than 1, and the market price is higher than Cen's price, Cen considers hold."
+                    message = "Last close day is: \(lastClosedDate), Last close BTC price is: \(lastCloseBTCPrice)\nOvernight factor: \(roundedFactor) is less than 1, and the market price is higher than Cen's price, Cen considers hold."
 
                 }
                 else{
-                    message = "Overnight factor: \(overnightFactor) is less than 1, and the market price is lower than Cen's price, Cen thniks that it is a good time to consider buy."
+                    message = "Last close day is: \(lastClosedDate), Last close BTC price is: \(lastCloseBTCPrice)\nOvernight factor: \(overnightFactor) is less than 1, and the market price is lower than Cen's price, Cen Cen considers buy."
                 }
             }
             print(message)
@@ -177,7 +177,14 @@ class ViewController: UIViewController{
                     
                     let t1 = bitcoinJSON["Time Series (Daily)"].dictionary!
                     let t2 = t1.sorted{ $0.key > $1.key }
-                    let t3 = t2[1]
+                    //get today's date
+                    let today = Date()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    let todayString = dateFormatter.string(from: today)
+                    print(t2[0].key)
+                    print(t2[1].key)
+                    let t3 = String(t2[0].key) == todayString ? t2[1] : t2[0]
                     let t4 = t3.value
                     self.lastClosedDate = String(t3.key)
                     
@@ -188,6 +195,7 @@ class ViewController: UIViewController{
                         
                         let myDate: Date = String(closedDate).toDate(dateFormat: "yyyy-MM-dd HH:mm:ss")!
                         let lastTimestamp =  Int(myDate.timeIntervalSince1970)
+                        print(closedDate)
                         print(Int(lastTimestamp))
                         self.getLastBTCPrice(timestamp: lastTimestamp)
                     }
