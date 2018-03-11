@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import SVProgressHUD
+import Foundation
 
 class ViewController: UIViewController{
     
@@ -28,12 +29,19 @@ class ViewController: UIViewController{
     //Pre-setup IBOutlets
     @IBOutlet weak var bitcoinPriceLabel: UILabel!
 
+    
+    @IBOutlet weak var ClosedBTCPrice: UILabel!
+    
+    @IBOutlet weak var myGauge: BLGaugeView!
+    @IBOutlet weak var OvernightFactor: UILabel!
+    @IBOutlet weak var ClosedGBTCPrice: UILabel!
     @IBOutlet weak var Suggestion: UILabel!
     @IBOutlet weak var CenRating: UILabel!
     @IBOutlet weak var gtbcPriceLabel: UILabel!
  
+
     @IBAction func DisclaimerPressed(_ sender: Any) {
-        let message = "The information contained in this presentation is solely for educational purposes and does not constitue investment advice.  We may or we may not take the trade. The risk of trading in securities markets can be substantial.  You should carefully consider if engaging in such activity is suitable to your own financial situation. I, Raymond Cen, am not responsible for any liabilities arising from the result of your market involvement or individual trade activities."
+        let message = "This application is solely for educational purpose and should not be taken as an investment advice.  Viewer's own judgement is highly recommended since financial market can be precarious and subjected to substantial risk.  Any financial result using this application is viewer's own responsibility."
         
         // create the alert
         let alert = UIAlertController(title: "Warning", message: message, preferredStyle: UIAlertControllerStyle.alert)
@@ -57,6 +65,7 @@ class ViewController: UIViewController{
 
         getTickerData(ticker:"BTC")
         getTickerData(ticker:"GBTC")
+        
        
     }
     
@@ -99,14 +108,15 @@ class ViewController: UIViewController{
             .responseJSON { response in
                 if response.result.isSuccess {
                     let json : JSON = JSON(response.result.value!)
+           
                     let t1 = json.array!
                     let t2 = t1.sorted{ $0["timestamp"] < $1["timestamp"]  }
                     let t3 = t2[0]["price"]
                     self.lastCloseBTCPrice = String(t3.doubleValue)
+                    let myValue = Int(t3.doubleValue)
                     
+                    self.ClosedBTCPrice.text = String(format: "$%d", myValue)
                     self.calculateCenRate()
-                    
-                    
                 }
         }
         
@@ -129,6 +139,7 @@ class ViewController: UIViewController{
             
             let overnightFactor = myCurrentBTC / myLastBTC
             let roundedFactor = String(format: "%.3f",overnightFactor)
+            OvernightFactor.text = String(roundedFactor)
             print("Overnight factor: '\(roundedFactor)'")
             cenRating = pow(overnightFactor, Double(1.5)) * myLastGBTC
             print("Cen Rating: pow(overnightFactor, Double(1.5)) * myLastGBTC = '\(cenRating)'")
@@ -136,31 +147,33 @@ class ViewController: UIViewController{
 
             if overnightFactor >  1{
                 if(cenRating < myCurrentGBTC ){
-                    message = "Last close day is: \(lastClosedDate), Last close BTC price is: \(lastCloseBTCPrice)\nOvernight factor: \(roundedFactor) is greater than 1, and the market price is higher than Cen's price, Cen considers sell."
+                    message = "Sell"
 
                 }
                 else{
-                    message = "Last close day is: \(lastClosedDate), Last close BTC price is: \(lastCloseBTCPrice)\nOvernight factor: \(roundedFactor) is greater than 1, and the market price is lower than Cen's price, Cen considers hold."
+                    message = "Hold"
 
                 }
             }
             else {
                 if(cenRating <= myCurrentGBTC ){
-                    message = "Last close day is: \(lastClosedDate), Last close BTC price is: \(lastCloseBTCPrice)\nOvernight factor: \(roundedFactor) is less than 1, and the market price is higher than Cen's price, Cen considers hold."
+                    message = "Hold"
 
                 }
                 else{
-                    message = "Last close day is: \(lastClosedDate), Last close BTC price is: \(lastCloseBTCPrice)\nOvernight factor: \(overnightFactor) is less than 1, and the market price is lower than Cen's price, Cen Cen considers buy."
+                    message = "Buy"
                 }
             }
             print(message)
-            CenRating.text = String(format: "CEN:      $%.2f",cenRating)
-            Suggestion.text = message
+            CenRating.text = String(format: "$%.2f",cenRating)
+            
+            let random = CGFloat(Double(arc4random())/Double(UInt32.max))
+            myGauge.setPercentValue(percentValue: random)
+            
         }
         else
         {
             CenRating.text = ""
-            Suggestion.text = ""
         }
         SVProgressHUD.dismiss()
         
@@ -179,18 +192,23 @@ class ViewController: UIViewController{
                     let t2 = t1.sorted{ $0.key > $1.key }
                     //get today's date
                     let today = Date()
+                    let hour = Calendar.current.component(.hour, from: today)
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd"
                     let todayString = dateFormatter.string(from: today)
                     print(t2[0].key)
                     print(t2[1].key)
-                    let t3 = String(t2[0].key) == todayString ? t2[1] : t2[0]
+                    let t3 = String(t2[0].key) == todayString && hour < 16 ? t2[1] : t2[0]
                     let t4 = t3.value
                     self.lastClosedDate = String(t3.key)
                     
                     if let tempResult = t4["4. close"].string {
                         
                         self.lastCloseGBTCPrice = tempResult
+                        if let myValue = Float(tempResult) {
+                             self.ClosedGBTCPrice.text = String(format: "$%.2f",myValue)
+                        }
+                       
                         let closedDate = String(t3.key) + " 16:00:00"
                         
                         let myDate: Date = String(closedDate).toDate(dateFormat: "yyyy-MM-dd HH:mm:ss")!
@@ -218,7 +236,7 @@ class ViewController: UIViewController{
                 let tempResult = json["last"].doubleValue
                 currentBTCPrice = String(tempResult)
                 let myBTCValue = Int(tempResult)
-                bitcoinPriceLabel.text = String(format: "BTC:       $%d",myBTCValue)
+                bitcoinPriceLabel.text = String(format: "$%d",myBTCValue)
             }
             else{
             if(json["Time Series (1min)"].dictionary != nil){
@@ -230,7 +248,7 @@ class ViewController: UIViewController{
                 if let tempResult = t4["1. open"].string {
                     currentGBTCPrice = tempResult
                     if let myValue = Double(tempResult) {
-                        gtbcPriceLabel.text = String(format: "GBTC:    $%.2f",myValue)
+                        gtbcPriceLabel.text = String(format: "$%.2f",myValue)
                     }
                     else{
                         gtbcPriceLabel.text = ""
@@ -238,7 +256,7 @@ class ViewController: UIViewController{
                     
                 }
                 else{
-                    gtbcPriceLabel.text = ticker + ": Price N/A"
+                    gtbcPriceLabel.text = "N/A"
                 }
                 }
             }
@@ -253,4 +271,3 @@ extension String{
         return dateFormatter.date(from: self)
     }
 }
-
