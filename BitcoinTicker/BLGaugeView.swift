@@ -88,21 +88,21 @@ open class BLGaugeView: UIView {
     open override func draw(_ rect: CGRect) {
         self.drawBackground()
         self.drawNeedle()
-        self.drawLabels()
+        //self.drawLabels()
     }
     
     
     private func drawBackground() {
         
         let startRedDegree  = CGFloat(3/4 * Double.pi)
-        let endRedDegree    = startRedDegree + CGFloat(3/10 * Double.pi)
+        let endRedDegree    = startRedDegree + CGFloat(6/10 * Double.pi)
         let startLighterRedDegree  = endRedDegree
-        let endLighterRedDegree    = startLighterRedDegree + CGFloat(3/10 * Double.pi)
+        let endLighterRedDegree    = startLighterRedDegree + CGFloat(3/40 * Double.pi)
         
         let startYellowDegree  = endLighterRedDegree
-        let endYellowDegree    = startYellowDegree + CGFloat(3/10 * Double.pi)
+        let endYellowDegree    = startYellowDegree + CGFloat(3/20 * Double.pi)
         let startLigterGreenDegree   = endYellowDegree
-        let endLighterGreenDegree     = endYellowDegree + CGFloat(3/10 * Double.pi)
+        let endLighterGreenDegree     = endYellowDegree + CGFloat(3/40 * Double.pi)
         
         let startGreenDegree   = endLighterGreenDegree
         let endGreenDegree     = CGFloat(9/4 * Double.pi)
@@ -155,7 +155,7 @@ open class BLGaugeView: UIView {
         bgPathCleaner.addArc(withCenter:  self.centerPoint, radius: innerRadius, startAngle: fromDegree, endAngle: toDegree, clockwise: true)
         bgPathCleaner.addLine(to: self.centerPoint)
         
-        UIColor.white.set()
+        UIColor.black.set()
         
         bgPathCleaner.stroke()
         bgPathCleaner.fill()
@@ -292,7 +292,7 @@ open class BLGaugeColors {
         return UIColor.init(hex: "FF4500")
     }
     class func redLighter() -> UIColor {
-        return UIColor.init(hex: "F08080")
+        return UIColor.init(hex: "880000")
     }
     
     class func yellow() -> UIColor {

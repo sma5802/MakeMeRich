@@ -124,6 +124,7 @@ class ViewController: UIViewController{
     
     func calculateCenRate(){
         
+        
         if let myCurrentBTC = Double(self.currentBTCPrice) ,
             let myCurrentGBTC = Double(self.currentGBTCPrice) ,
             let myLastBTC = Double(self.lastCloseBTCPrice) ,
@@ -144,31 +145,32 @@ class ViewController: UIViewController{
             cenRating = pow(overnightFactor, Double(1.5)) * myLastGBTC
             print("Cen Rating: pow(overnightFactor, Double(1.5)) * myLastGBTC = '\(cenRating)'")
             var message = ""
+            var percentage = 0.0
 
             if overnightFactor >  1{
                 if(cenRating < myCurrentGBTC ){
                     message = "Sell"
-
+                    percentage = 0.5 + (myCurrentGBTC - cenRating) / myCurrentGBTC
                 }
                 else{
                     message = "Hold"
-
+                    percentage = 0.525
                 }
             }
             else {
                 if(cenRating <= myCurrentGBTC ){
                     message = "Hold"
-
+                    percentage = 0.475
                 }
                 else{
                     message = "Buy"
+                    percentage = 0.5 - (cenRating - myCurrentGBTC) / myCurrentGBTC
                 }
             }
             print(message)
             CenRating.text = String(format: "$%.2f",cenRating)
             
-            let random = CGFloat(Double(arc4random())/Double(UInt32.max))
-            myGauge.setPercentValue(percentValue: random)
+            myGauge.setPercentValue(percentValue: CGFloat(percentage))
             
         }
         else

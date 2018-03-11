@@ -169,10 +169,7 @@
                                 <rect key="frame" x="26" y="415" width="323" height="150"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Or2-3V-htg" userLabel="Gauge" customClass="BLGaugeView" customModule="BitcoinTicker" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="159" height="150"/>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qY4-GF-1kL" userLabel="Chart" customClass="BLGaugeView" customModule="BitcoinTicker" customModuleProvider="target">
-                                        <rect key="frame" x="164" y="0.0" width="159" height="150"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="323" height="150"/>
                                     </view>
                                 </subviews>
                                 <constraints>
