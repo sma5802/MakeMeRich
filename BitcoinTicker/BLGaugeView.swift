@@ -27,8 +27,10 @@ open class BLGaugeView: UIView {
     let totalDegree = CGFloat(3/2*Double.pi)
     let baseDegree  = CGFloat(5/4*Double.pi)
     
-    private let percentLabelValues = [0, 0.2, 0.4, 0.6, 0.8, 1]
-    private let percentDistanceIncrementValues: [CGFloat] = [0, 18, 18, 12, 3, 0]
+    private let percentLabelValues = ["Buy", "Hold", "Sell"]
+    
+    private let percentLabelDegrees = [1.25, 1.5, 1.75]
+    private let percentDistanceIncrementValues: [CGFloat] = [20, 20, 20]
     
     internal var centerPoint: CGPoint {
         get {
@@ -88,7 +90,7 @@ open class BLGaugeView: UIView {
     open override func draw(_ rect: CGRect) {
         self.drawBackground()
         self.drawNeedle()
-        //self.drawLabels()
+        self.drawLabels()
     }
     
     
@@ -206,17 +208,18 @@ open class BLGaugeView: UIView {
     func drawLabels() {
         for i in 0..<percentLabelValues.count {
             let value = percentLabelValues[i]
+            let myDegree = percentLabelDegrees[i]
             let incrementValue = percentDistanceIncrementValues[i]
             
-            let degree = CGFloat((3/4*Double.pi)+(value*3/2*Double.pi))
-            self.drawLabel(title: "\(Int(value*100))" as NSString, onPoint: centerPoint.pointFrom(distance: bgRadius+incrementValue, andDegree: degree))
+            let degree = CGFloat(myDegree*Double.pi)
+            self.drawLabel(title: value as NSString, onPoint: centerPoint.pointFrom(distance: bgRadius+incrementValue, andDegree: degree))
         }
     }
     
     func drawLabel(title: NSString, onPoint: CGPoint) {
         let rectToDraw = CGRect(x: onPoint.x, y: onPoint.y, width: 60.0, height: 30.0)
         
-        let labelColor = self.labelColor ?? BLGaugeColors.grey700()
+        let labelColor = self.labelColor ?? BLGaugeColors.white()
         let attrs = [NSAttributedStringKey.foregroundColor: labelColor,
                      NSAttributedStringKey.font: labelFont ?? UIFont.systemFont(ofSize: labelSize ?? 12.0)]
         
@@ -282,7 +285,7 @@ extension UIColor {
 
 extension CGPoint {
     func pointFrom(distance: CGFloat, andDegree: CGFloat) -> CGPoint {
-        return CGPoint(x: self.x+cos(andDegree)*distance, y: self.y+sin(andDegree)*distance)
+        return CGPoint(x: -12 + self.x+cos(andDegree)*distance, y: -0.5 + self.y+sin(andDegree)*distance)
     }
 }
 
@@ -308,6 +311,10 @@ open class BLGaugeColors {
     
     class func grey() -> UIColor {
         return UIColor.init(hex: "9E9E9E")
+    }
+    
+    class func white() -> UIColor {
+        return UIColor.init(hex: "FFFFFF")
     }
     
     class func grey700() -> UIColor {

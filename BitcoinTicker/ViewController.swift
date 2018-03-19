@@ -154,13 +154,13 @@ class ViewController: UIViewController{
                 }
                 else{
                     message = "Hold"
-                    percentage = 0.525
+                    percentage = 0.5
                 }
             }
             else {
                 if(cenRating <= myCurrentGBTC ){
                     message = "Hold"
-                    percentage = 0.475
+                    percentage = 0.5
                 }
                 else{
                     message = "Buy"
