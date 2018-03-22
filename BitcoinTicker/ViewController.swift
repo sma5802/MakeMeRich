@@ -168,7 +168,9 @@ class ViewController: UIViewController{
                 }
             }
             print(message)
+            print(percentage)
             CenRating.text = String(format: "$%.2f",cenRating)
+            Suggestion.text = message
             
             myGauge.setPercentValue(percentValue: CGFloat(percentage))
             

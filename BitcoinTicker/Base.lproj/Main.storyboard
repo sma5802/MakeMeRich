@@ -43,16 +43,16 @@
                                 <rect key="frame" x="60" y="155" width="255" height="250"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="aaR-w9-272" userLabel="LastBTCContainer">
-                                        <rect key="frame" x="0.0" y="0.0" width="255" height="37.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="255" height="31.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Closed BTC:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UWP-c9-lxP">
-                                                <rect key="frame" x="0.0" y="0.0" width="126.5" height="37.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="126.5" height="31.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BdS-sI-P4m">
-                                                <rect key="frame" x="128.5" y="0.0" width="126.5" height="37.5"/>
+                                                <rect key="frame" x="128.5" y="0.0" width="126.5" height="31.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.27103535950000002" green="1" blue="0.2332423559" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -60,16 +60,16 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="yLH-BP-TGe" userLabel="LastGBTCContainer">
-                                        <rect key="frame" x="0.0" y="42.5" width="255" height="37.5"/>
+                                        <rect key="frame" x="0.0" y="36.5" width="255" height="31.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Closed GBTC:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x55-VR-pgt">
-                                                <rect key="frame" x="0.0" y="0.0" width="126.5" height="37.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="126.5" height="31.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VzR-Be-FOM">
-                                                <rect key="frame" x="128.5" y="0.0" width="126.5" height="37.5"/>
+                                                <rect key="frame" x="128.5" y="0.0" width="126.5" height="31.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.27103535950000002" green="1" blue="0.2332423559" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -77,16 +77,16 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="zb9-hc-ZId" userLabel="BTCContainer">
-                                        <rect key="frame" x="0.0" y="85" width="255" height="37.5"/>
+                                        <rect key="frame" x="0.0" y="73" width="255" height="31.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current BTC:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7P1-yr-b4u">
-                                                <rect key="frame" x="0.0" y="0.0" width="126.5" height="37.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="126.5" height="31.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Rx-92-mn4">
-                                                <rect key="frame" x="128.5" y="0.0" width="126.5" height="37.5"/>
+                                                <rect key="frame" x="128.5" y="0.0" width="126.5" height="31.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.27103535950000002" green="1" blue="0.2332423559" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -94,16 +94,16 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="gMP-2F-nbU" userLabel="GBTCContainer">
-                                        <rect key="frame" x="0.0" y="127.5" width="255" height="37.5"/>
+                                        <rect key="frame" x="0.0" y="109.5" width="255" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current GBTC:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oyc-st-9z1">
-                                                <rect key="frame" x="0.0" y="0.0" width="126.5" height="37.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="126.5" height="31"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NY2-79-oA0">
-                                                <rect key="frame" x="128.5" y="0.0" width="126.5" height="37.5"/>
+                                                <rect key="frame" x="128.5" y="0.0" width="126.5" height="31"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.27103535950000002" green="1" blue="0.2332423559" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -111,16 +111,16 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="uDF-yg-Iii" userLabel="OvernightFactorContainer">
-                                        <rect key="frame" x="0.0" y="170" width="255" height="37.5"/>
+                                        <rect key="frame" x="0.0" y="145.5" width="255" height="31.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overnight Factor:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ske-xo-JuB">
-                                                <rect key="frame" x="0.0" y="0.0" width="126.5" height="37.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="126.5" height="31.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bf3-gT-3cj">
-                                                <rect key="frame" x="128.5" y="0.0" width="126.5" height="37.5"/>
+                                                <rect key="frame" x="128.5" y="0.0" width="126.5" height="31.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.27103535950000002" green="1" blue="0.2332423559" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -128,16 +128,33 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="voB-Af-pA4" userLabel="CENContainer">
-                                        <rect key="frame" x="0.0" y="212.5" width="255" height="37.5"/>
+                                        <rect key="frame" x="0.0" y="182" width="255" height="31.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trending Price:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qGq-H8-1ge">
-                                                <rect key="frame" x="0.0" y="0.0" width="126.5" height="37.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="126.5" height="31.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y3X-JW-KvG">
-                                                <rect key="frame" x="128.5" y="0.0" width="126.5" height="37.5"/>
+                                                <rect key="frame" x="128.5" y="0.0" width="126.5" height="31.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.27103535950000002" green="1" blue="0.2332423559" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Ycf-nj-Ap1" userLabel="Recommend:Container">
+                                        <rect key="frame" x="0.0" y="218.5" width="255" height="31.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recommend:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lrN-Nt-6xR">
+                                                <rect key="frame" x="0.0" y="0.0" width="126.5" height="31.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tY9-dR-l7B">
+                                                <rect key="frame" x="128.5" y="0.0" width="126.5" height="31.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.27103535950000002" green="1" blue="0.2332423559" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -199,6 +216,7 @@
                         <outlet property="ClosedBTCPrice" destination="BdS-sI-P4m" id="VbA-9V-777"/>
                         <outlet property="ClosedGBTCPrice" destination="VzR-Be-FOM" id="y3W-m8-HpU"/>
                         <outlet property="OvernightFactor" destination="Bf3-gT-3cj" id="3yY-wq-SAr"/>
+                        <outlet property="Suggestion" destination="tY9-dR-l7B" id="tCL-Tg-fUB"/>
                         <outlet property="bitcoinPriceLabel" destination="8Rx-92-mn4" id="0Ci-gW-pyY"/>
                         <outlet property="gtbcPriceLabel" destination="NY2-79-oA0" id="En8-5W-aly"/>
                         <outlet property="myGauge" destination="Or2-3V-htg" id="Ksi-aY-Kti"/>

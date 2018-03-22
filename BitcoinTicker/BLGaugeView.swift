@@ -96,18 +96,18 @@ open class BLGaugeView: UIView {
     
     private func drawBackground() {
         
-        let startRedDegree  = CGFloat(3/4 * Double.pi)
-        let endRedDegree    = startRedDegree + CGFloat(6/10 * Double.pi)
-        let startLighterRedDegree  = endRedDegree
-        let endLighterRedDegree    = startLighterRedDegree + CGFloat(3/40 * Double.pi)
+        let startGreenDegree  = CGFloat(3/4 * Double.pi)
+        let endGreenDegree    = startGreenDegree + CGFloat(6/10 * Double.pi)
+        let startLighterGreenDegree  = endGreenDegree
+        let endLighterGreenDegree    = startLighterGreenDegree + CGFloat(3/40 * Double.pi)
         
-        let startYellowDegree  = endLighterRedDegree
+        let startYellowDegree  = endLighterGreenDegree
         let endYellowDegree    = startYellowDegree + CGFloat(3/20 * Double.pi)
-        let startLigterGreenDegree   = endYellowDegree
-        let endLighterGreenDegree     = endYellowDegree + CGFloat(3/40 * Double.pi)
+        let startLigterRedDegree   = endYellowDegree
+        let endLighterRedDegree     = endYellowDegree + CGFloat(3/40 * Double.pi)
         
-        let startGreenDegree   = endLighterGreenDegree
-        let endGreenDegree     = CGFloat(9/4 * Double.pi)
+        let startRedDegree   = endLighterRedDegree
+        let endRedDegree     = CGFloat(9/4 * Double.pi)
         
         let redColor = self.redColor ?? BLGaugeColors.red()
         let redLighterColor = self.redLighterColor ?? BLGaugeColors.redLighter()
@@ -116,13 +116,13 @@ open class BLGaugeView: UIView {
         let greenLighterColor = self.greenLighterColor ?? BLGaugeColors.greenLighter()
         
         
-        drawPathColored(fromDegree: startRedDegree, toDegree: endRedDegree, color: redColor)
-        drawPathColored(fromDegree: startLighterRedDegree, toDegree: endLighterRedDegree, color: redLighterColor)
-        drawPathColored(fromDegree: startYellowDegree, toDegree: endYellowDegree, color: yellowColor)
-        drawPathColored(fromDegree: startLigterGreenDegree, toDegree: endLighterGreenDegree, color: greenLighterColor)
         drawPathColored(fromDegree: startGreenDegree, toDegree: endGreenDegree, color: greenColor)
+        drawPathColored(fromDegree: startLighterGreenDegree, toDegree: endLighterGreenDegree, color: greenLighterColor)
+        drawPathColored(fromDegree: startYellowDegree, toDegree: endYellowDegree, color: yellowColor)
+        drawPathColored(fromDegree: startLigterRedDegree, toDegree: endLighterRedDegree, color: redLighterColor)
+        drawPathColored(fromDegree: startRedDegree, toDegree: endRedDegree, color: redColor)
         
-        drawPathCleaner(fromDegree: startRedDegree, toDegree: endGreenDegree)
+        drawPathCleaner(fromDegree: startGreenDegree, toDegree: endRedDegree)
     }
     
     func drawPathColored(fromDegree: CGFloat, toDegree: CGFloat, color: UIColor) {
@@ -292,10 +292,10 @@ extension CGPoint {
 open class BLGaugeColors {
     
     class func red() -> UIColor {
-        return UIColor.init(hex: "FF4500")
+        return UIColor.init(hex: "880000")
     }
     class func redLighter() -> UIColor {
-        return UIColor.init(hex: "880000")
+        return UIColor.init(hex: "FF4500")
     }
     
     class func yellow() -> UIColor {
